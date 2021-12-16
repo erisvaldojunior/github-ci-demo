@@ -29,10 +29,6 @@ jobs:
           echo "BRANCH ---> '${{ github.event.inputs.branch }}'"
           echo "MESSAGE ---> '${{ github.event.inputs.message }}'"
 
-      - name: Checkout
-        id: checkout
-        uses: actions/checkout@v2
-
       - name: Create Directory "tokens"
         run: 'mkdir -p tokens'
 

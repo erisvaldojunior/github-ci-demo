@@ -54,3 +54,10 @@ jobs:
           json: ${{ github.event.inputs.message }}
           # it uses the directory named "tokens" to store this json file (change this if you changed it above to use a different folder)
           dir: 'tokens'
+
+      # We now store the changes in the repository
+      - name: Persist changes in repository
+        uses: mikeal/publish-to-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH_NAME: 'main'

@@ -26,8 +26,8 @@ jobs:
       - name: Inputs
         id: input-messages
         run: |
-          echo "BRANCH ---> '${{ github.event.payload.branch }}'"
-          echo "MESSAGE ---> '${{ github.event.payload.message }}'"
+          echo "BRANCH ---> '${{ github.event.inputs.branch }}'"
+          echo "MESSAGE ---> '${{ github.event.inputs.message }}'"
 
       - name: Checkout
         id: checkout
@@ -48,7 +48,7 @@ jobs:
         with:
           name: 'tokens.json'
           # it uses the json string that was send as the tokens parameter
-          json: ${{ github.event.payload.message }}
+          json: ${{ github.event.inputs.message }}
           # it uses the directory named "tokens" to store this json file (change this if you changed it above to use a different folder)
           dir: 'tokens'
 
@@ -57,4 +57,4 @@ jobs:
         uses: mikeal/publish-to-github-action@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BRANCH_NAME: ${{ github.event.payload.branch }}
+          BRANCH_NAME: ${{ github.event.inputs.branch }}

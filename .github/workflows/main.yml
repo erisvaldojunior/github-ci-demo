@@ -28,6 +28,9 @@ jobs:
         run: |
           echo "MESSAGE ---> '${{ github.event.inputs.message }}'"
           echo "VERSION ---> '${{ github.event.inputs.version }}'"
+          echo "FIGMA_TOKEN ---> '${{ secrets.FIGMA_TOKEN }}'"
+          echo "FIGMA_URL ---> '${{ secrets.FIGMA_URL }}'"
+          echo "GITHUB_TOKEN ---> '${{ secrets.GITHUB_TOKEN }}'"
 
       - name: Checkout
         id: checkout
@@ -39,16 +42,15 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Install Figmagic
-        id: install
-        run: npm install -D figmagic
+      - name: Create Directory "tokens"
+        run: 'mkdir -p tokens'
 
-      - name: Run Figmagic and use latest Figma data
-        id: figma-latest
-        if: ${{ !github.event.inputs.version }}
-        run: npx figmagic --token ${{ secrets.FIGMA_TOKEN }} --url ${{ secrets.FIGMA_URL }}
-
-      - name: Run Figmagic and use named version of Figma data
-        id: figma-versioned
-        if: ${{ github.event.inputs.version }}
-        run: npx figmagic --token ${{ secrets.FIGMA_TOKEN }} --url ${{ secrets.FIGMA_URL }} --versionName ${{ github.event.inputs.version }}
+      - name: Create JSON from request body
+        id: create-json
+        uses: jsdaniell/create-json@1.1.2
+        with:
+          name: 'tokens.json'
+          # it uses the json string that was send as the tokens parameter
+          json: ${{ github.event.inputs.message }}
+          # it uses the directory named "tokens" to store this json file (change this if you changed it above to use a different folder)
+          dir: 'tokens'

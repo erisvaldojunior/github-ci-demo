@@ -3,14 +3,14 @@ name: main
 on:
   workflow_dispatch:
     inputs:
+      branch:
+        description: 'What branch?'
+        required: false
+        default: 'main'
       message:
-        description: 'Message. What changes were made?'
-        required: false
+        description: 'Message. What is being sent?'
+        required: true
         default: 'Updated Figma'
-      version:
-        description: 'Which version of the Figma document to use?'
-        required: false
-        default: '' # Will use latest if not set
   push:
     branches:
       - "main"

@@ -53,7 +53,7 @@ jobs:
 
       - name: Create Typescript Theme File from request body
         run: |
-          printf ${{ github.event.inputs.theme }} > figma/restyleTheme.ts
+          printf "${{ github.event.inputs.theme }}" > figma/restyleTheme.ts
 
       # - name: Create Typescript Theme File from request body
       #  uses: "finnp/create-file-action@master"

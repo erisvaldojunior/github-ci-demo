@@ -42,7 +42,7 @@ jobs:
         with:
           name: 'tokens.json'
           # it uses the json string that was send as the tokens parameter
-          json: ${{ github.event.inputs.message }}
+          json: ${{ github.event.inputs.message.designTokens }}
           # it uses the directory named "tokens" to store this json file (change this if you changed it above to use a different folder)
           dir: 'tokens'
 

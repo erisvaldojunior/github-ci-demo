@@ -52,10 +52,14 @@ jobs:
           dir: 'figma'
 
       - name: Create Typescript Theme File from request body
-        uses: "finnp/create-file-action@master"
-        env:
-          FILE_NAME: 'figma/restyleTheme.ts'
-          FILE_DATA: ${{ github.event.inputs.theme }}
+        run: |
+          printf ${{ github.event.inputs.theme }} > figma/restyleTheme.ts
+
+      # - name: Create Typescript Theme File from request body
+      #  uses: "finnp/create-file-action@master"
+      #  env:
+      #    FILE_NAME: 'figma/restyleTheme.ts'
+      #    FILE_DATA: ${{ github.event.inputs.theme }}
 
       # We now store the changes in the repository
       - name: Persist changes in repository

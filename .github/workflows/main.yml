@@ -7,10 +7,14 @@ on:
         description: 'What branch?'
         required: false
         default: 'main'
-      message:
-        description: 'Message. What is being sent?'
+      tokens:
+        description: 'Design Tokens'
         required: true
-        default: 'Updated Figma'
+        default: 'Updated Design Tokens from Figma'
+      theme:
+        description: 'Restyle Theme'
+        required: false
+        default: 'Updated Restyle Theme from Figma'
   push:
     branches:
       - "main"
@@ -27,7 +31,8 @@ jobs:
         id: input-messages
         run: |
           echo "BRANCH ---> '${{ github.event.inputs.branch }}'"
-          echo "MESSAGE ---> '${{ github.event.inputs.message }}'"
+          echo "TOKENS ---> '${{ github.event.inputs.tokens }}'"
+          echo "THEME ---> '${{ github.event.inputs.theme }}'"
 
       - name: Checkout
         id: checkout
@@ -42,15 +47,15 @@ jobs:
         with:
           name: 'tokens.json'
           # it uses the json string that was send as the tokens parameter
-          json: ${{ github.event.inputs.message.designTokens }}
+          json: ${{ github.event.inputs.tokens }}
           # it uses the directory named "tokens" to store this json file (change this if you changed it above to use a different folder)
           dir: 'figma'
 
       - name: Create Typescript Theme File from request body
         uses: "finnp/create-file-action@master"
         env:
-          FILE_NAME: "figma/restyleTheme.ts"
-          FILE_DATA: ${{ github.event.inputs.message.restyleTheme }}
+          FILE_NAME: 'figma/restyleTheme.ts'
+          FILE_DATA: ${{ github.event.inputs.theme }}
 
       # We now store the changes in the repository
       - name: Persist changes in repository
